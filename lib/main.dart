@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lab6/widgets/sign_up_screen.dart';
-import './widgets/sign_in_screen.dart';
+import 'package:lab6/screens/sign_in_screen.dart';
 
 void main() {
   runApp(const MyApp());

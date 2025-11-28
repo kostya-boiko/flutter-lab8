@@ -1,43 +1,55 @@
 import 'package:flutter/material.dart';
 
 class StandardButton extends StatelessWidget {
-  const StandardButton({super.key, required this.textInfo, this.onClick, this.isAccent = false});
+  const StandardButton({
+    super.key,
+    required this.textInfo,
+    this.onClick,
+    this.isAccent = false,
+    this.isLoading = false,
+  });
 
   final String textInfo;
   final VoidCallback? onClick;
   final bool isAccent;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-        onPressed: () {
-          if (onClick != null) {
-             onClick!();
-          } else {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Message'),
-              content: Text('$textInfo is not working right now'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
-          }
-        },
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: double.infinity,
+      height: 54,
+      child: FilledButton(
+        onPressed: onClick,
+        style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          side: BorderSide(
+            width: 1,
+            color: isAccent
+                ? theme.colorScheme.primary
+                : theme.colorScheme.onSurface.withOpacity(0.5),
           ),
-          side: const BorderSide(width: 1, color: Colors.grey),
-          backgroundColor: isAccent ? Theme.of(context).colorScheme.primary : Colors.transparent,
+          backgroundColor: isAccent
+              ? theme.colorScheme.primary
+              : theme.colorScheme.surface,
+          foregroundColor: isAccent
+              ? theme.colorScheme.onPrimary
+              : theme.colorScheme.onSurface,
         ),
-        child: Text(textInfo, style: TextStyle(color: isAccent ? Colors.white : Theme.of(context).colorScheme.primary)),
+        child: isLoading
+            ? CircularProgressIndicator(
+                color: isAccent
+                    ? theme.colorScheme.onPrimary
+                    : theme.colorScheme.primary,
+                strokeWidth: 4,
+              )
+            : Text(
+                textInfo,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+      ),
     );
   }
 }
