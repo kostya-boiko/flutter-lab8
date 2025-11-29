@@ -1,4 +1,4 @@
 bool validatePassword(String password) {
-  if (password.length < 6) return false;
+  if (password.length < 7) return false;
   return true;
 }

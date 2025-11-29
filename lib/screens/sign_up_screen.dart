@@ -15,23 +15,27 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
   final confirmController = TextEditingController();
 
   bool isLoading = false;
 
   String? emailError;
   String? passwordError;
+  String? nameError;
   String? confirmError;
   String? globalError;
 
   Future<void> signUp() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    final name = nameController.text.trim();
     final confirm = confirmController.text.trim();
 
     setState(() {
       emailError = null;
       passwordError = null;
+      nameError = null;
       confirmError = null;
       globalError = null;
     });
@@ -44,7 +48,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     if (!validatePassword(password)) {
-      passwordError = "Minimum 6 characters";
+      passwordError = "Minimum 7 characters";
+      hasError = true;
+    }
+
+    if(name.length < 2) {
+      nameError = "Minimum 2 characters";
       hasError = true;
     }
 
@@ -108,6 +117,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
+
+            StandardInput(
+              isObscureText: false,
+              labelText: 'Name',
+              controller: nameController,
+              errorText: nameError,
+            ),
+            const SizedBox(height: 10),
 
             StandardInput(
               isObscureText: false,

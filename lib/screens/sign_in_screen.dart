@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     if (!validatePassword(password)) {
-      passwordError = "Minimum 6 characters";
+      passwordError = "Minimum 7 characters";
       hasError = true;
     }
 
